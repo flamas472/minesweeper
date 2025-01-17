@@ -1,7 +1,31 @@
 
-export type tileValue = "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"mine"|"wrong-mine"|"flag"|"question-mark";
+// export type tileValue = "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"mine"|"wrong-mine"|"flag"|"question-mark";
 
-export default function Tile({value}: {value: string}) {
+export default function Tile({value, isHidden = true}: {value: string, isHidden: boolean}) {
+
+    if(isHidden) {
+        return <HiddenTile/>
+    } else {
+        return <OpenedTile value={value}/>
+    }
+
+    return (
+        <OpenedTile value={value} />
+    );
+}
+
+function HiddenTile() {
+    
+    return(
+        <div className={"bg-gray-300 w-4 h-4 flex justify-center items-center border-[2.5px] border-t-gray-200 border-r-gray-500 border-b-gray-500 border-l-gray-200 text-xs"}>
+            <p>
+                {}
+            </p>
+        </div>
+    )
+}
+
+function OpenedTile({value}: {value: string}) {
     let tileContent: string = "";
     let className: string = "";
 
@@ -49,12 +73,12 @@ export default function Tile({value}: {value: string}) {
         default:
             tileContent = value;//change to "" later
     }
-
-    return (
-        <div className={"bg-gray-300 w-4 h-4 flex justify-center items-center border-[2.5px] border-t-gray-200 border-r-gray-500 border-b-gray-500 border-l-gray-200 text-xs" + className}>
+    
+    return(
+        <div className={"bg-gray-300 w-4 h-4 flex justify-center items-center border-[0.5px] border-gray-500 text-xs" + className}>
             <p>
                 {tileContent}
             </p>
         </div>
-    );
+    )
 }
