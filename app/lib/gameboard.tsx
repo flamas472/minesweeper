@@ -93,6 +93,6 @@ function adjacentPositions(pos: position, columns: number, rows:  number) {
     ];
 
     return adjPos.filter(
-        (p) => p.x > 0 && p.x < columns && p.y > 0 && p.y < rows
+        (p) => p.x >= 0 && p.x < columns && p.y >= 0 && p.y < rows
     );
 }

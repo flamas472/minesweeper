@@ -70,7 +70,7 @@ function OpenedTile({value}: {value: string}) {
             tileContent = "💣";
             className = " text-gray-600 font-black";
         break;
-        case "bomb":
+        case "mine":
             // as 8 is the limit of adjacent mines, 9 represents a mine in the tile
             tileContent = "💣";
         break;
