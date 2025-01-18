@@ -21,9 +21,10 @@ export default function Board() {
                             {
                                 row.map(
                                     (tileValue, cIndex) => (
-                                        <
-                                            Tile value={String(tileValue)}
+                                        <Tile
+                                            value={String(tileValue)}
                                             isHidden={false}
+                                            isFlagged={false}
                                             key={cIndex}
                                         />
                                     )

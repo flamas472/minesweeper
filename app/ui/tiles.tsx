@@ -1,25 +1,32 @@
 
 // export type tileValue = "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"mine"|"wrong-mine"|"flag"|"question-mark";
 
-export default function Tile({value, isHidden = true}: {value: string, isHidden: boolean}) {
+// Tile({2}) returns a JSX component wich represents a tile, hidden or opened.
+export default function Tile({value, isHidden = true, isFlagged = false}: {value: string, isHidden: boolean, isFlagged: boolean}) {
 
     if(isHidden) {
-        return <HiddenTile/>
+        if(isFlagged) {
+            return <HiddenTile isFlagged={true}/>
+        }
+        return <HiddenTile isFlagged={false}/>
+        
     } else {
         return <OpenedTile value={value}/>
     }
-
-    return (
-        <OpenedTile value={value} />
-    );
 }
 
-function HiddenTile() {
-    
+function HiddenTile({isFlagged}: {isFlagged: boolean}) {
+    let tileContent = "";
+
+    if(isFlagged) {
+        tileContent = "🚩";
+    }
+
+
     return(
         <div className={"bg-gray-300 w-4 h-4 flex justify-center items-center border-[2.5px] border-t-gray-200 border-r-gray-500 border-b-gray-500 border-l-gray-200 text-xs"}>
             <p>
-                {}
+                {tileContent}
             </p>
         </div>
     )
