@@ -74,6 +74,7 @@ export function play(action: playerAction, pos: position, playGrid: playerAction
     let result: gameState = "";
 
     playGrid[pos.x][pos.y] = action;
+    // TODO CHECK THE ACTION AND CONSIDER FLAG AND UNFLAG
     if(mineGrid[pos.x][pos.y] === 9) {
         result = "loose";
     } else {
