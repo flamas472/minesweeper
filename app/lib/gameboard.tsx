@@ -5,18 +5,21 @@ type position = {
     y: number
 }
 
+type playerAction = ""|"open"|"flag";
+type gameState = ""|"win"|"loose";
+
 // gameBoard(2) returns a game grid (2 dimensional array) filled with all the game necessary information: numbers 0 to 8 for nearby mines on safe tiles and 9 for mine tiles
 export function gameBoard(columns: number, rows: number): number[][] {
     // declare and initialize the game grid and the mine positions as empty arrays
     const mines: number = 10;
-    const grid: number[][] = [];
+    const mineGrid: number[][] = [];
     const minePositions: position[] = [];
 
     // initialize the grid content according to the number of rows and columns
     for(let r = 0; r < rows;r++) {
-        grid.push([]);
+        mineGrid.push([]);
         for(let c = 0; c < columns; c++) {
-            grid[r].push(0)
+            mineGrid[r].push(0)
         }
     }
 
@@ -24,7 +27,7 @@ export function gameBoard(columns: number, rows: number): number[][] {
     for(let m = 0; m < mines; m++) {
         minePositions.push(newMinePosition(columns, rows, minePositions));
         // 9 represents a mine
-        grid[minePositions[m].x][minePositions[m].y] = 9;
+        mineGrid[minePositions[m].x][minePositions[m].y] = 9;
     }
 
     // fill tiles with their amount of nearby mines
@@ -36,9 +39,9 @@ export function gameBoard(columns: number, rows: number): number[][] {
                 // for each adjacent tile
                 (pos) => {
                     // if it's not a mine
-                    if(grid[pos.x][pos.y] < 9) {
+                    if(mineGrid[pos.x][pos.y] < 9) {
                         // increment the counter (value of the tile)
-                        grid[pos.x][pos.y]++;
+                        mineGrid[pos.x][pos.y]++;
                     }
                 }
             );
@@ -47,15 +50,15 @@ export function gameBoard(columns: number, rows: number): number[][] {
     
 
 
-    return grid;
+    return mineGrid;
 }
 
 // playBoard(2) returns a play grid (2 dimensional array) with all the player's plays
 // the play grid will save all player's actions.
 // the player can do 2 things: open or flag tiles.
 // so the grid will be filled with "open" "flag" or "" (no play)
-export function playBoard(columns: number, rows: number): string[][] {
-    const playGrid: string[][] = []
+export function playBoard(columns: number, rows: number): playerAction[][] {
+    const playGrid: playerAction[][] = []
 
     for(let r  = 0; r < rows; r++) {
         playGrid.push([]);
@@ -65,6 +68,19 @@ export function playBoard(columns: number, rows: number): string[][] {
         }
     }
     return playGrid;
+}
+
+export function play(action: playerAction, pos: position, playGrid: playerAction[][], mineGrid: number[][]): [playerAction[][], gameState] {
+    let result: gameState = "";
+
+    playGrid[pos.x][pos.y] = action;
+    if(mineGrid[pos.x][pos.y] === 9) {
+        result = "loose";
+    } else {
+        // TODO if it's a safe tile, open adjacent tiles;
+    }
+
+    return [playGrid, result];
 }
 
 function newMinePosition(maxX: number, maxY: number, blackList: position[]): position {
