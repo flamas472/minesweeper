@@ -4,7 +4,7 @@ export default function Page() {
     return(
         <div>
             New Game
-            <Board/>
+            <Board columns={16} rows={16} mines={40}/>
         </div>
     );
 }

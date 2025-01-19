@@ -9,9 +9,9 @@ type playerAction = ""|"open"|"flag";
 type gameState = ""|"win"|"loose";
 
 // gameBoard(2) returns a game grid (2 dimensional array) filled with all the game necessary information: numbers 0 to 8 for nearby mines on safe tiles and 9 for mine tiles
-export function gameBoard(columns: number, rows: number): number[][] {
+export function gameBoard(columns: number, rows: number, mines: number): number[][] {
     // declare and initialize the game grid and the mine positions as empty arrays
-    const mines: number = 10;
+    //const mines: number = 10;
     const mineGrid: number[][] = [];
     const minePositions: position[] = [];
 
@@ -72,16 +72,30 @@ export function playBoard(columns: number, rows: number): playerAction[][] {
 
 export function play(action: playerAction, pos: position, playGrid: playerAction[][], mineGrid: number[][]): [playerAction[][], gameState] {
     let result: gameState = "";
+    const newPlayGrid: playerAction[][] = playGrid.slice();
 
-    playGrid[pos.x][pos.y] = action;
-    // TODO CHECK THE ACTION AND CONSIDER FLAG AND UNFLAG
-    if(mineGrid[pos.x][pos.y] === 9) {
-        result = "loose";
-    } else {
-        // TODO if it's a safe tile, open adjacent tiles;
+    switch(action) {
+        case "flag":
+            if(playGrid[pos.x][pos.y] === "flag") {
+                newPlayGrid[pos.x][pos.y] = "";
+            } else {
+                newPlayGrid[pos.x][pos.y] = action;
+            }
+        break;
+        case "open":
+            newPlayGrid[pos.x][pos.y] = action;
+            if(mineGrid[pos.x][pos.y] === 9) {
+                result = "loose";
+            } else {
+                //TODO If the tile value is 0: open nearby tiles, as they are safe too.
+                result = checkWinCondition(playGrid, mineGrid);
+            }
+        break;
+        //TODO Add Chord
     }
 
-    return [playGrid, result];
+    
+    return [newPlayGrid, result];
 }
 
 function newMinePosition(maxX: number, maxY: number, blackList: position[]): position {
@@ -128,4 +142,22 @@ function adjacentPositions(pos: position, columns: number, rows:  number): posit
     return adjPos.filter(
         (p) => p.x >= 0 && p.x < columns && p.y >= 0 && p.y < rows
     );
+}
+
+function checkWinCondition(playGrid: playerAction[][], mineGrid: number[][]): gameState {
+
+    mineGrid.forEach(
+        (row, y) => {
+            row.forEach(
+                (tileValue, x) => {
+                    if(tileValue < 9 && playGrid[x][y] !== "open") {
+                        //If there's a safe tile not open return "" (keep playing)
+                        return "";
+                    }
+                }
+            );
+        }
+    );
+
+    return "win";
 }

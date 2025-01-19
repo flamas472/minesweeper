@@ -5,11 +5,11 @@ import {gameBoard} from "@/app/lib/gameboard";
 
  
 
-export default function Board() {
+export default function Board({columns, rows, mines}: {columns: number, rows: number, mines: number}) {
     
-    const columns: number = 9;
-    const rows: number = 9;
-    const grid: number[][] = gameBoard(columns, rows);
+    //const columns: number = 9;
+    //const rows: number = 9;
+    const grid: number[][] = gameBoard(columns, rows, mines);
 
 
     return(
