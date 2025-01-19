@@ -5,8 +5,8 @@ type position = {
     y: number
 }
 
-
-export default function gameBoard(columns: number, rows: number)  {
+// gameBoard(2) returns a game grid (2 dimensional array) filled with all the game necessary information: numbers 0 to 8 for nearby mines on safe tiles and 9 for mine tiles
+export function gameBoard(columns: number, rows: number): number[][] {
     // declare and initialize the game grid and the mine positions as empty arrays
     const mines: number = 10;
     const grid: number[][] = [];
@@ -50,8 +50,24 @@ export default function gameBoard(columns: number, rows: number)  {
     return grid;
 }
 
+// playBoard(2) returns a play grid (2 dimensional array) with all the player's plays
+// the play grid will save all player's actions.
+// the player can do 2 things: open or flag tiles.
+// so the grid will be filled with "open" "flag" or "" (no play)
+export function playBoard(columns: number, rows: number): string[][] {
+    const playGrid: string[][] = []
 
-function newMinePosition(maxX: number, maxY: number, blackList: position[]) {
+    for(let r  = 0; r < rows; r++) {
+        playGrid.push([]);
+        for(let c = 0; c < columns; c++) {
+            // empty string means no play
+            playGrid[r].push("");
+        }
+    }
+    return playGrid;
+}
+
+function newMinePosition(maxX: number, maxY: number, blackList: position[]): position {
     
     let randomPos: position = randomPosition(maxX, maxY);
 
@@ -62,7 +78,7 @@ function newMinePosition(maxX: number, maxY: number, blackList: position[]) {
     return randomPos;
 }
 
-function randomPosition(maxX: number, maxY: number) {
+function randomPosition(maxX: number, maxY: number): position {
     const randomPos: position = {
         x: Math.floor(Math.random() * maxX),
         y: Math.floor(Math.random() * maxY)
@@ -70,7 +86,7 @@ function randomPosition(maxX: number, maxY: number) {
     return randomPos;
 }
 
-function includesPosition(list: position[], pos: position) {
+function includesPosition(list: position[], pos: position): boolean {
 
     for(let i = 0; i < list.length; i++) {
         if(list[i].x === pos.x && list[i].y === pos.y) {
@@ -80,7 +96,7 @@ function includesPosition(list: position[], pos: position) {
     return false;
 }
 
-function adjacentPositions(pos: position, columns: number, rows:  number) {
+function adjacentPositions(pos: position, columns: number, rows:  number): position[] {
     const adjPos: position[] = [
         {x: pos.x, y: pos.y - 1},       //adjPos[0] = top
         {x: pos.x + 1, y: pos.y - 1},   //adjPos[1] = topright

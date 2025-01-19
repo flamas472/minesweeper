@@ -1,6 +1,6 @@
 import Tile from "@/app/ui/tiles";
 // import { tileValue } from "@/app/ui/tile";
-import gameBoard from "@/app/lib/gameboard";
+import {gameBoard} from "@/app/lib/gameboard";
 // import { useState } from "react";
 
  

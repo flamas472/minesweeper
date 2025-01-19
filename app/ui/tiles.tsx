@@ -24,7 +24,7 @@ function HiddenTile({isFlagged}: {isFlagged: boolean}) {
 
 
     return(
-        <div className={"bg-gray-300 w-4 h-4 flex justify-center items-center border-[2.5px] border-t-gray-200 border-r-gray-500 border-b-gray-500 border-l-gray-200 text-xs"}>
+        <div className={"bg-gray-300 w-4 h-4 flex justify-center items-center border-[2.5px] border-t-gray-200 border-r-gray-500 border-b-gray-500 border-l-gray-200 text-[0.6rem]"}>
             <p>
                 {tileContent}
             </p>
