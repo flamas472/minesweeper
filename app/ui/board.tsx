@@ -10,7 +10,7 @@ export default function Board({columns, rows, mines}: {columns: number, rows: nu
     
     // const mineGrid: number[][] = gameBoard(columns, rows, mines);
     const [mineGrid, setMineGrid] = useState(gameBoard(columns, rows, mines));
-    const [[playGrid, gameResult], setPlayGrid] = useState([playBoard(columns, rows), ""]);
+    const [[playGrid, gameState], setPlayGrid] = useState([playBoard(columns, rows), ""]);
 
     function handleClick(pos: position) {
         setPlayGrid(play("open", pos, playGrid, mineGrid));
@@ -30,7 +30,6 @@ export default function Board({columns, rows, mines}: {columns: number, rows: nu
                                             tilePlay={playGrid[x][y]}
                                             onClick={
                                                 () => {
-                                                    console.log(`hiciste click en (${x}, ${y})`);
                                                     handleClick({x: x, y: y});
                                                 }
                                             }
