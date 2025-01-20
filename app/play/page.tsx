@@ -1,10 +1,11 @@
+"use client"
 import Board from "@/app/ui/board";
 
 export default function Page() {
     return(
-        <div>
+        <div className="flex justify-center items-center flex-col">
             New Game
-            <Board columns={9} rows={9} mines={10}/>
+            <Board columns={16} rows={16} mines={40}/>
         </div>
     );
 }

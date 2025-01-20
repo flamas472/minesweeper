@@ -23,37 +23,46 @@ export default function Board({columns, rows, mines}: {columns: number, rows: nu
     }
 
     return(
-        <div className="flex justify-center items-center flex-col gap-0">
+        
+        <div className="p-1.5 flex justify-center items-center flex-col bg-gray-300 border-[2.5px] border-t-gray-200 border-r-gray-500 border-b-gray-500 border-l-gray-200 gap-1.5">
+
+            <div id="game-board-header" className="p-0 flex justify-center items-center flex-row max-h-min w-full bg-gray-300 max-w-max border-[2.5px] border-t-gray-500 border-r-gray-200 border-b-gray-200 border-l-gray-500">
+                GAME INFO HERE
+            </div>
             
-            {
-                mineGrid.map(
-                    (row, y) => (
-                        <div key={y} className="flex justify-center items-center flex-row gap-0 ">
-                            {
-                                row.map(
-                                    (tileValue, x) => (
-                                        <Tile
-                                            value={String(tileValue)}
-                                            tilePlay={playGrid[y][x]}
-                                            onClick={
-                                                () => {
-                                                    handleClick({x: x, y: y});
+            <div id="game-board" className="flex justify-center items-center flex-col gap-0 max-h-min max-w-min border-[2.5px] border-t-gray-500 border-r-gray-200 border-b-gray-200 border-l-gray-500">
+                
+                {
+                    mineGrid.map(
+                        (row, y) => (
+                            <div key={y} className="flex justify-center items-center flex-row gap-0 max-h-min max-w-min">
+                                {
+                                    row.map(
+                                        (tileValue, x) => (
+                                            <Tile
+                                                value={String(tileValue)}
+                                                tilePlay={playGrid[y][x]}
+                                                onClick={
+                                                    () => {
+                                                        handleClick({x: x, y: y});
+                                                    }
                                                 }
-                                            }
-                                            onRightClick={
-                                                () => {
-                                                    handleRightClick({x: x, y: y});
+                                                onRightClick={
+                                                    () => {
+                                                        handleRightClick({x: x, y: y});
+                                                    }
                                                 }
-                                            }
-                                            key={x}
-                                        />
+                                                key={x}
+                                            />
+                                        )
                                     )
-                                )
-                            }
-                        </div>
+                                }
+                            </div>
+                        )
                     )
-                )
-            }
+                }
+            </div>
         </div>
+        
     );
 }
