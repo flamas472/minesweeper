@@ -1,12 +1,12 @@
 
 
-type position = {
+export type position = {
     x: number,
     y: number
 }
 
-type playerAction = ""|"open"|"flag";
-type gameState = ""|"win"|"loose";
+export type playerAction = ""|"open"|"flag";
+export type gameState = ""|"win"|"loose";
 
 // gameBoard(2) returns a game grid (2 dimensional array) filled with all the game necessary information: numbers 0 to 8 for nearby mines on safe tiles and 9 for mine tiles
 export function gameBoard(columns: number, rows: number, mines: number): number[][] {
@@ -72,23 +72,26 @@ export function playBoard(columns: number, rows: number): playerAction[][] {
 
 export function play(action: playerAction, pos: position, playGrid: playerAction[][], mineGrid: number[][]): [playerAction[][], gameState] {
     let result: gameState = "";
+    const tileState: playerAction = playGrid[pos.x][pos.y];
     const newPlayGrid: playerAction[][] = playGrid.slice();
 
     switch(action) {
         case "flag":
-            if(playGrid[pos.x][pos.y] === "flag") {
+            if (tileState === ""){
+                newPlayGrid[pos.x][pos.y] = "flag";
+            } else if(tileState === "flag") {
                 newPlayGrid[pos.x][pos.y] = "";
-            } else {
-                newPlayGrid[pos.x][pos.y] = action;
             }
         break;
         case "open":
-            newPlayGrid[pos.x][pos.y] = action;
-            if(mineGrid[pos.x][pos.y] === 9) {
-                result = "loose";
-            } else {
-                //TODO If the tile value is 0: open nearby tiles, as they are safe too.
-                result = checkWinCondition(playGrid, mineGrid);
+            if (tileState  === "") {
+                newPlayGrid[pos.x][pos.y] = action;
+                if(mineGrid[pos.x][pos.y] === 9) {
+                    result = "loose";
+                } else {
+                    //TODO If the tile value is 0: open nearby tiles, as they are safe too.
+                    result = checkWinCondition(playGrid, mineGrid);
+                }
             }
         break;
         //TODO Add Chord
