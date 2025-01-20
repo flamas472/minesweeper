@@ -1,17 +1,19 @@
-
+import { playerAction } from "@/app/lib/gameboard";
 // export type tileValue = "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"mine"|"wrong-mine"|"flag"|"question-mark";
 
 // Tile({2}) returns a JSX component wich represents a tile, hidden or opened.
-export default function Tile({value, isHidden = true, isFlagged = false}: {value: string, isHidden: boolean, isFlagged: boolean}) {
-
-    if(isHidden) {
-        if(isFlagged) {
+export default function Tile({value, tilePlay}: {value: string, tilePlay: playerAction}) {
+    
+    switch(tilePlay) {
+        case "":
+            return <HiddenTile isFlagged={false}/>;
+        break;
+        case "flag":
             return <HiddenTile isFlagged={true}/>
-        }
-        return <HiddenTile isFlagged={false}/>
-        
-    } else {
-        return <OpenedTile value={value}/>
+        break;
+        case "open":
+            return <OpenedTile value={value}/>
+        break;
     }
 }
 

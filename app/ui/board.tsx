@@ -23,8 +23,7 @@ export default function Board({columns, rows, mines}: {columns: number, rows: nu
                                     (tileValue, x) => (
                                         <Tile
                                             value={String(tileValue)}
-                                            isHidden={false}
-                                            isFlagged={false}
+                                            tilePlay="open"
                                             key={x}
                                         />
                                     )
