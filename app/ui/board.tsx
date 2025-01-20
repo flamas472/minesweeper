@@ -4,7 +4,6 @@ import Tile from "@/app/ui/tiles";
 import { position, playerAction, gameState, gameBoard, playBoard, play} from "@/app/lib/gameboard";
 import { useState } from "react";
 
- 
 
 export default function Board({columns, rows, mines}: {columns: number, rows: number, mines: number}) {
     
@@ -15,9 +14,14 @@ export default function Board({columns, rows, mines}: {columns: number, rows: nu
     function handleClick(pos: position) {
         setPlayGrid(play("open", pos, playGrid, mineGrid));
     }
+    function handleRightClick(pos: position) {
+        setPlayGrid(play("flag", pos, playGrid, mineGrid));
+
+    }
 
     return(
         <div className="flex justify-center items-center flex-col gap-0">
+            
             {
                 mineGrid.map(
                     (row, y) => (
@@ -31,6 +35,11 @@ export default function Board({columns, rows, mines}: {columns: number, rows: nu
                                             onClick={
                                                 () => {
                                                     handleClick({x: x, y: y});
+                                                }
+                                            }
+                                            onRightClick={
+                                                () => {
+                                                    handleRightClick({x: x, y: y});
                                                 }
                                             }
                                             key={x}

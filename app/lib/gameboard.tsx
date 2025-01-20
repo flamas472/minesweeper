@@ -5,7 +5,7 @@ export type position = {
     y: number
 }
 
-export type playerAction = ""|"open"|"flag";
+export type playerAction = ""|"open"|"flag"|"auto-open";
 export type gameState = ""|"win"|"loose";
 
 // gameBoard(2) returns a game grid (2 dimensional array) filled with all the game necessary information: numbers 0 to 8 for nearby mines on safe tiles and 9 for mine tiles
@@ -95,7 +95,6 @@ export function play(action: playerAction, pos: position, playGrid: playerAction
                     // if it's not a mine, then it´s safe.
                     // 1st check if it has 0 nearby tiles and open them if so.
                     if(tileValue === 0) {
-                        console.log("> tile value = 0");
                     }
 
                     // if it´s safe, check win condition.
@@ -161,19 +160,19 @@ function adjacentPositions(pos: position, columns: number, rows:  number): posit
 }
 
 function checkWinCondition(playGrid: playerAction[][], mineGrid: number[][]): gameState {
-
+    let result: gameState = "win";
     mineGrid.forEach(
         (row, y) => {
             row.forEach(
                 (tileValue, x) => {
                     if(tileValue < 9 && playGrid[y][x] !== "open") {
                         //If there's a safe tile not open return "" (keep playing)
-                        return "";
+                        result = "";
                     }
                 }
             );
         }
     );
-
-    return "win";
+    console.log(result);
+    return result;
 }
