@@ -96,7 +96,6 @@ function OpenedTile({value, onClick, onRightClick}: {value: string}) {
     return(
         <div
         className={"select-none bg-gray-300 w-4 h-4 flex justify-center items-center border-[0.5px] border-gray-500 text-xs" + className}
-        onSelect={(e)=>e.preventDefault()}
         onClick={onclick}
         onContextMenu={(event) =>{
             event.preventDefault();
