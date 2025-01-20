@@ -108,7 +108,6 @@ function newMinePosition(maxX: number, maxY: number, blackList: position[]): pos
     while(includesPosition(blackList, randomPos)) {
         randomPos = randomPosition(maxX, maxY);
     }
-
     return randomPos;
 }
 
@@ -121,13 +120,17 @@ function randomPosition(maxX: number, maxY: number): position {
 }
 
 function includesPosition(list: position[], pos: position): boolean {
+    let includes: boolean = false;
 
-    for(let i = 0; i < list.length; i++) {
-        if(list[i].x === pos.x && list[i].y === pos.y) {
-            return true;
+    list.forEach(
+        (p) => {
+            if(p.x === pos.x && p.y === pos.y) {
+                includes = true;
+                return;
+            }
         }
-    }
-    return false;
+    );
+    return includes;
 }
 
 function adjacentPositions(pos: position, columns: number, rows:  number): position[] {
