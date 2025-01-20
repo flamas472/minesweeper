@@ -27,7 +27,7 @@ export default function Board({columns, rows, mines}: {columns: number, rows: nu
                                     (tileValue, x) => (
                                         <Tile
                                             value={String(tileValue)}
-                                            tilePlay={playGrid[x][y]}
+                                            tilePlay={playGrid[y][x]}
                                             onClick={
                                                 () => {
                                                     handleClick({x: x, y: y});

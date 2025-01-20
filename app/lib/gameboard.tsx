@@ -1,4 +1,4 @@
-
+"use client"
 
 export type position = {
     x: number,
@@ -27,7 +27,7 @@ export function gameBoard(columns: number, rows: number, mines: number): number[
     for(let m = 0; m < mines; m++) {
         minePositions.push(newMinePosition(columns, rows, minePositions));
         // 9 represents a mine
-        mineGrid[minePositions[m].x][minePositions[m].y] = 9;
+        mineGrid[minePositions[m].y][minePositions[m].x] = 9;
     }
 
     // fill tiles with their amount of nearby mines
@@ -39,9 +39,9 @@ export function gameBoard(columns: number, rows: number, mines: number): number[
                 // for each adjacent tile
                 (pos) => {
                     // if it's not a mine
-                    if(mineGrid[pos.x][pos.y] < 9) {
+                    if(mineGrid[pos.y][pos.x] < 9) {
                         // increment the counter (value of the tile)
-                        mineGrid[pos.x][pos.y]++;
+                        mineGrid[pos.y][pos.x]++;
                     }
                 }
             );
@@ -72,29 +72,39 @@ export function playBoard(columns: number, rows: number): playerAction[][] {
 
 export function play(action: playerAction, pos: position, playGrid: playerAction[][], mineGrid: number[][]): [playerAction[][], gameState] {
     let result: gameState = "";
-    const tileState: playerAction = playGrid[pos.x][pos.y];
+    const tileState: playerAction = playGrid[pos.y][pos.x];
+    const tileValue: number = mineGrid[pos.y][pos.x];
     const newPlayGrid: playerAction[][] = playGrid.slice();
 
     switch(action) {
         case "flag":
             if (tileState === ""){
-                newPlayGrid[pos.x][pos.y] = "flag";
+                newPlayGrid[pos.y][pos.x] = "flag";
             } else if(tileState === "flag") {
-                newPlayGrid[pos.x][pos.y] = "";
+                newPlayGrid[pos.y][pos.x] = "";
             }
         break;
         case "open":
             if (tileState  === "") {
-                newPlayGrid[pos.x][pos.y] = action;
-                if(mineGrid[pos.x][pos.y] === 9) {
+                newPlayGrid[pos.y][pos.x] = "open";
+                if(tileValue === 9) {
+                    // If the opened tile is a mine, set teh game result to "loose"
                     result = "loose";
+                    console.log("> you loose");
                 } else {
-                    //TODO If the tile value is 0: open nearby tiles, as they are safe too.
+                    // if it's not a mine, then it´s safe.
+                    // 1st check if it has 0 nearby tiles and open them if so.
+                    if(tileValue === 0) {
+                        console.log("> tile value = 0");
+                    }
+
+                    // if it´s safe, check win condition.
                     result = checkWinCondition(playGrid, mineGrid);
                 }
+            } else if(tileState === "open") {
+                // TODO Add Chord here
             }
         break;
-        //TODO Add Chord
     }
 
     
@@ -156,7 +166,7 @@ function checkWinCondition(playGrid: playerAction[][], mineGrid: number[][]): ga
         (row, y) => {
             row.forEach(
                 (tileValue, x) => {
-                    if(tileValue < 9 && playGrid[x][y] !== "open") {
+                    if(tileValue < 9 && playGrid[y][x] !== "open") {
                         //If there's a safe tile not open return "" (keep playing)
                         return "";
                     }
