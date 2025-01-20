@@ -7,14 +7,14 @@ export default function Tile({value, tilePlay, onClick, onRightClick}: {value: s
     
     
     switch(tilePlay) {
-        case "":
+        case "----":
             return <HiddenTile isFlagged={false} onClick={onClick} onRightClick={onRightClick}/>;
         break;
         case "flag":
             return <HiddenTile isFlagged={true} onClick={onClick} onRightClick={onRightClick}/>
         break;
         case "open":
-            return <OpenedTile value={value} onRightClick={onRightClick}/>
+            return <OpenedTile value={value} onClick={onClick} onRightClick={onRightClick}/>
         break;
     }
 }
@@ -28,12 +28,13 @@ function HiddenTile({isFlagged, onClick, onRightClick}: {isFlagged: boolean, onC
 
 
     return(
-        <div className={"select-none bg-gray-300 w-4 h-4 flex justify-center items-center border-[2.5px] border-t-gray-200 border-r-gray-500 border-b-gray-500 border-l-gray-200 text-[0.6rem]"}
-        onClick={onClick}
-        onContextMenu={(event) =>{
-            event.preventDefault();
-            onRightClick();
-        }}
+        <div
+            className={"select-none bg-gray-300 w-4 h-4 flex justify-center items-center border-[2.5px] border-t-gray-200 border-r-gray-500 border-b-gray-500 border-l-gray-200 text-[0.6rem]"}
+            onClick={onClick}
+            onContextMenu={(event) =>{
+                event.preventDefault();
+                onRightClick();
+            }}
         >
             {tileContent}
         </div>
@@ -95,12 +96,12 @@ function OpenedTile({value, onClick, onRightClick}: {value: string}) {
     
     return(
         <div
-        className={"select-none bg-gray-300 w-4 h-4 flex justify-center items-center border-[0.5px] border-gray-500 text-xs" + className}
-        onClick={onclick}
-        onContextMenu={(event) =>{
-            event.preventDefault();
-            onRightClick();
-        }}
+            className={"select-none bg-gray-300 w-4 h-4 flex justify-center items-center border-[0.5px] border-gray-500 text-xs" + className}
+            onClick={onClick}
+            onContextMenu={(event) =>{
+                event.preventDefault();
+                onRightClick();
+            }}
         >
             {tileContent}
         </div>

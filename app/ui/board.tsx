@@ -9,14 +9,17 @@ export default function Board({columns, rows, mines}: {columns: number, rows: nu
     
     // const mineGrid: number[][] = gameBoard(columns, rows, mines);
     const [mineGrid, setMineGrid] = useState(gameBoard(columns, rows, mines));
-    const [[playGrid, gameState], setPlayGrid] = useState([playBoard(columns, rows), ""]);
+    const [[playGrid, gameResult], setPlayGrid] = useState([playBoard(columns, rows), "play"]);
+    
+    if(gameResult !== "") {
+        console.log(`you ${gameResult}!`)
+    }
 
     function handleClick(pos: position) {
         setPlayGrid(play("open", pos, playGrid, mineGrid));
     }
     function handleRightClick(pos: position) {
         setPlayGrid(play("flag", pos, playGrid, mineGrid));
-
     }
 
     return(
