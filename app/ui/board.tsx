@@ -1,7 +1,7 @@
 "use client"
 import Tile from "@/app/ui/tiles";
 // import { tileValue } from "@/app/ui/tile";
-import { position, playerAction, gameState, gameBoard, playBoard, play, countAllFlags} from "@/app/lib/game";
+import { position, gameBoard, playBoard, play, countAllFlags} from "@/app/lib/game";
 import { useState } from "react";
 import { useStopwatch } from "react-timer-hook"
 import { DigitalDisplay, MinesweeperEmojiButton } from "@/app/ui/boardHeader";

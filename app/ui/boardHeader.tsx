@@ -1,5 +1,4 @@
 "use client"
-import { gameState } from "@/app/lib/game";
 export function DigitalDisplay({value}: {value: number}) {
     return (
         <div className="select-none">
@@ -8,7 +7,7 @@ export function DigitalDisplay({value}: {value: number}) {
     );
 }
 
-export function MinesweeperEmojiButton({gameResult, onClick}: {gameResult: gameState, onClick: ()=>void}) {
+export function MinesweeperEmojiButton({gameResult, onClick}: {gameResult: string, onClick: ()=>void}) {
     let emoji: string = ""
     switch(gameResult) {
         case "":
