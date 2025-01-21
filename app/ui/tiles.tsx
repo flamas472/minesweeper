@@ -1,9 +1,9 @@
 "use client"
-import { playerAction } from "@/app/lib/gameboard";
+import { playerAction } from "@/app/lib/game";
 // export type tileValue = "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"mine"|"wrong-mine"|"flag"|"question-mark";
 
 // Tile({2}) returns a JSX component wich represents a tile, hidden or opened.
-export default function Tile({value, tilePlay, onClick, onRightClick}: {value: string, tilePlay: playerAction, onClick: React.MouseEventHandler<HTMLDivElement>}) {
+export default function Tile({value, tilePlay, onClick, onRightClick}: {value: string, tilePlay: playerAction, onClick: ()=>void, onRightClick: ()=>void}) {
     
     
     switch(tilePlay) {
@@ -19,7 +19,7 @@ export default function Tile({value, tilePlay, onClick, onRightClick}: {value: s
     }
 }
 
-function HiddenTile({isFlagged, onClick, onRightClick}: {isFlagged: boolean, onClick: React.MouseEventHandler<HTMLDivElement>}) {
+function HiddenTile({isFlagged, onClick, onRightClick}: {isFlagged: boolean, onClick: ()=>void, onRightClick: ()=>void}) {
     let tileContent = "";
 
     if(isFlagged) {
@@ -41,7 +41,7 @@ function HiddenTile({isFlagged, onClick, onRightClick}: {isFlagged: boolean, onC
     )
 }
 
-function OpenedTile({value, onClick, onRightClick}: {value: string}) {
+function OpenedTile({value, onClick, onRightClick}: {value: string, onClick: ()=>void, onRightClick: ()=>void}) {
     let tileContent: string = "";
     let className: string = "";
 
