@@ -25,7 +25,7 @@ export function DigitalDisplay({value}: {value: number}) {
     
 
     return (
-        <div className={`select-none m-1 bg-black ${digital.className} text-4xl text-red-600`}>
+        <div className={`select-none m-1 text-center bg-black ${digital.className} text-4xl leading-7 text-red-600`}>
             {displayValue}
         </div>
     );
