@@ -133,7 +133,7 @@ function chord(pos: position, playGrid: playerAction[][], mineGrid: number[][]):
             // 1) the chord originated on a safe tile with 0 adjacent mines. In this case, open flags too, as they are a safe tile anyways.
             // 2) the chord originated on a safe tile with the same number of adjacent mines and flags
             if((targetTilePlay !== "open" && tileValue === 0) || (targetTilePlay === "----" && tileValue === adjacentFlags)) {
-                // even if the play function may call chord again, both functions work with the last
+                // even if the play function may call chord again, both functions work with the last grids
                 [newPlayGrid, result] = play("open", p, newPlayGrid, mineGrid);
             }
         }
