@@ -6,7 +6,7 @@ export type position = {
 }
 
 export type playerAction = "----"|"open"|"flag";
-export type gameState = ""|"win"|"loose";
+export type gameState = ""|"play"|"win"|"lose";
 
 // gameBoard(2) returns a game grid (2 dimensional array) filled with all the game necessary information: numbers 0 to 8 for nearby mines on safe tiles and 9 for mine tiles
 export function gameBoard(columns: number, rows: number, mines: number): number[][] {
@@ -71,7 +71,7 @@ export function playBoard(columns: number, rows: number): playerAction[][] {
 }
 
 export function play(action: playerAction, pos: position, playGrid: playerAction[][], mineGrid: number[][]): [playerAction[][], gameState] {
-    let result: gameState = "";
+    let result: gameState = "play";
     const tileState: playerAction = playGrid[pos.y][pos.x];
     const tileValue: number = mineGrid[pos.y][pos.x];
     let newPlayGrid: playerAction[][] = playGrid.slice();
@@ -88,8 +88,8 @@ export function play(action: playerAction, pos: position, playGrid: playerAction
             if (tileState  === "----") {
                 newPlayGrid[pos.y][pos.x] = "open";
                 if(tileValue === 9) {
-                    // If the opened tile is a mine, set teh game result to "loose"
-                    result = "loose";
+                    // If the opened tile is a mine, set teh game result to "lose"
+                    result = "lose";
                 } else {
                     // if it's not a mine, then it´s safe.
                     // 1st check if it has 0 nearby tiles and open them if so.
@@ -116,7 +116,7 @@ function chord(pos: position, playGrid: playerAction[][], mineGrid: number[][]):
     const rows: number = playGrid.length;
     const adjPositions: position[] = getAdjacentPositions(pos, columns, rows);
     let newPlayGrid: playerAction[][] = playGrid.slice();
-    let result: gameState = "";
+    let result: gameState = "play";
     // const tilePlay: playerAction = playGrid[pos.y][pos.x];
     const tileValue: number = mineGrid[pos.y][pos.x];
     const adjacentFlags: number = countAdjacentFlags(pos, playGrid);
@@ -197,7 +197,7 @@ function checkWinCondition(playGrid: playerAction[][], mineGrid: number[][]): ga
                 (tileValue, x) => {
                     if(tileValue < 9 && playGrid[y][x] !== "open") {
                         //If there's a safe tile not open return "" (keep playing)
-                        result = "";
+                        result = "play";
                     }
                 }
             );
@@ -206,7 +206,7 @@ function checkWinCondition(playGrid: playerAction[][], mineGrid: number[][]): ga
     return result;
 }
 
-function countAdjacentFlags(pos: position, playGrid: playerAction[][]) {
+function countAdjacentFlags(pos: position, playGrid: playerAction[][]): number {
     const columns: number = playGrid[0].length;
     const rows: number = playGrid.length;
     const adjPos: position[] = getAdjacentPositions(pos, columns, rows);
@@ -221,4 +221,22 @@ function countAdjacentFlags(pos: position, playGrid: playerAction[][]) {
     );
 
     return adjacentFlags;
+}
+
+export function countAllFlags(playGrid: playerAction[][]): number {
+    let flags: number = 0
+
+    playGrid.forEach(
+        (row) => {
+            row.forEach(
+                (tilePlay) => {
+                    if(tilePlay === "flag") {
+                        flags++;
+                    }
+                }
+            );
+        }
+    );
+
+    return flags;
 }
