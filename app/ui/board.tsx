@@ -52,9 +52,9 @@ export default function Board({columns, rows, mines}: {columns: number, rows: nu
 
     return(
         
-        <div className="p-1.5 flex justify-center items-center flex-col bg-gray-300 border-[2.5px] border-t-gray-200 border-r-gray-500 border-b-gray-500 border-l-gray-200 gap-1.5">
+        <div id="game-board" className="p-1.5 flex items-center justify-center flex-col bg-gray-300 border-[2.5px] flex-wrap border-t-gray-200 border-r-gray-500 border-b-gray-500 border-l-gray-200 gap-1.5">
 
-            <div id="game-board-header" className="p-0 flex justify-center items-center flex-row gap-5 max-h-min w-full bg-gray-300 max-w-max border-[2.5px] border-t-gray-500 border-r-gray-200 border-b-gray-200 border-l-gray-500">
+            <div id="game-board-header" className="w-full p-0 w-full flex justify-between items-center flex-row bg-gray-300 border-[2.5px] border-t-gray-500 border-r-gray-200 border-b-gray-200 border-l-gray-500">
 
                 <DigitalDisplay value={mines - countAllFlags(playGrid)}/>
 
@@ -66,12 +66,12 @@ export default function Board({columns, rows, mines}: {columns: number, rows: nu
 
             </div>
             
-            <div id="game-board" className="flex justify-center items-center flex-col gap-0 max-h-min max-w-min border-[2.5px] border-t-gray-500 border-r-gray-200 border-b-gray-200 border-l-gray-500">
+            <div id="play-board" className="flex justify-center items-center flex-col gap-0 max-w-min border-[2.5px] border-t-gray-500 border-r-gray-200 border-b-gray-200 border-l-gray-500">
                 
                 {
                     mineGrid.map(
                         (row, y) => (
-                            <div key={y} className="flex justify-center items-center flex-row gap-0 max-h-min max-w-min">
+                            <div key={y} className="flex justify-center items-center flex-row gap-0 max-w-min">
                                 {
                                     row.map(
                                         (tileValue, x) => (
