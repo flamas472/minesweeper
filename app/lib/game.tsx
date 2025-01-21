@@ -6,6 +6,8 @@ export type position = {
 }
 
 export type playerAction = "----"|"open"|"flag";
+
+// "" means unstarted game
 export type gameState = ""|"play"|"win"|"lose";
 
 // gameBoard(2) returns a game grid (2 dimensional array) filled with all the game necessary information: numbers 0 to 8 for nearby mines on safe tiles and 9 for mine tiles
