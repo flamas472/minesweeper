@@ -1,8 +1,32 @@
 "use client"
+import localFont from "next/font/local"
+
+const digital = localFont({src: [
+    {
+        path: "./fonts/Lets-go-Digital-Regular.ttf.woff",
+        weight: "700",
+        style: "normal"
+    }
+]});
+
+
+
 export function DigitalDisplay({value}: {value: number}) {
+
+    let displayValue: string = String(value);
+    const zeroesNeeded: number = 3 - displayValue.length;
+
+    if(displayValue.length < 3) {
+        for(let i = 0; i < zeroesNeeded; i++) {
+            displayValue = "0" + displayValue;
+        }
+
+    }
+    
+
     return (
-        <div className="select-none m-1">
-            {value}
+        <div className={`select-none m-1 bg-black ${digital.className} text-4xl text-red-600`}>
+            {displayValue}
         </div>
     );
 }
