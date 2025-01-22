@@ -11,7 +11,7 @@ export type playerAction = "----"|"open"|"flag";
 export type gameState = ""|"play"|"win"|"lose";
 
 // gameBoard(2) returns a game grid (2 dimensional array) filled with all the game necessary information: numbers 0 to 8 for nearby mines on safe tiles and 9 for mine tiles
-export function gameBoard(columns: number, rows: number, mines: number): number[][] {
+export function gameBoard(columns: number, rows: number, mines: number, firstPlayPos: position): number[][] {
     // declare and initialize the game grid and the mine positions as empty arrays
     //const mines: number = 10;
     const mineGrid: number[][] = [];
@@ -27,7 +27,7 @@ export function gameBoard(columns: number, rows: number, mines: number): number[
 
     // fill grid with mines
     for(let m = 0; m < mines; m++) {
-        minePositions.push(newMinePosition(columns, rows, minePositions));
+        minePositions.push(newMinePosition(columns, rows, [firstPlayPos , ...minePositions]));
         // 9 represents a mine
         mineGrid[minePositions[m].y][minePositions[m].x] = 9;
     }

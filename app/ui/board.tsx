@@ -36,7 +36,7 @@ export default function Board({columns, rows, mines}: {columns: number, rows: nu
 
         if(currentGameState === "") {
             // If the game hasn't started yet, then start it
-            currentMineGrid = gameBoard(columns, rows, mines);
+            currentMineGrid = gameBoard(columns, rows, mines, pos);
             setMineGrid(currentMineGrid);
             start();
         } else if(currentGameState === "win" || currentGameState === "lose") {
