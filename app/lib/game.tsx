@@ -65,7 +65,7 @@ export function playBoard(columns: number, rows: number): playerAction[][] {
     for(let r  = 0; r < rows; r++) {
         playGrid.push([]);
         for(let c = 0; c < columns; c++) {
-            // empty string means no play
+            // "----" means no play
             playGrid[r].push("----");
         }
     }
@@ -103,7 +103,6 @@ export function play(action: playerAction, pos: position, playGrid: playerAction
                     result = checkWinCondition(playGrid, mineGrid);
                 }
             } else if(tileState === "open") {
-                // TODO Add Chord here
                 [newPlayGrid, result] = chord(pos, playGrid, mineGrid);
             }
         break;
@@ -116,15 +115,21 @@ export function play(action: playerAction, pos: position, playGrid: playerAction
 function chord(pos: position, playGrid: playerAction[][], mineGrid: number[][]): [playerAction[][], gameState] {
     const columns: number = playGrid[0].length;
     const rows: number = playGrid.length;
-    const adjPositions: position[] = getAdjacentPositions(pos, columns, rows);
     let newPlayGrid: playerAction[][] = playGrid.slice();
     let result: gameState = "play";
     // const tilePlay: playerAction = playGrid[pos.y][pos.x];
     const tileValue: number = mineGrid[pos.y][pos.x];
     const adjacentFlags: number = countAdjacentFlags(pos, playGrid);
+    const adjPositions: position[] = getAdjacentPositions(pos, columns, rows).sort(
+        (tileA, tileB) => {
 
-    // if(tileValue === 0 || adjacent)
-
+            if(mineGrid[tileB.y][tileB.x] === 9) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
+    );
 
     adjPositions.forEach(
         (p) => {
@@ -198,7 +203,7 @@ function checkWinCondition(playGrid: playerAction[][], mineGrid: number[][]): ga
             row.forEach(
                 (tileValue, x) => {
                     if(tileValue < 9 && playGrid[y][x] !== "open") {
-                        //If there's a safe tile not open return "" (keep playing)
+                        //If there's a safe tile not open return "play" (keep playing)
                         result = "play";
                     }
                 }
