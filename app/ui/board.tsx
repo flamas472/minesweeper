@@ -61,7 +61,7 @@ export default function Board({columns, rows, mines}: {columns: number, rows: nu
         
         <div id="game-board" className="p-1.5 flex items-center justify-center flex-col bg-gray-300 border-[2.5px] flex-wrap border-t-gray-200 border-r-gray-500 border-b-gray-500 border-l-gray-200">
 
-            <div id="game-board-header" className="w-full p-0 w-full flex justify-between items-center flex-row bg-gray-300 border-[2.5px] border-t-gray-500 border-r-gray-200 border-b-gray-200 border-l-gray-500">
+            <div id="game-board-header" className="w-full p-0 flex justify-between items-center flex-row bg-gray-300 border-[2.5px] border-t-gray-500 border-r-gray-200 border-b-gray-200 border-l-gray-500">
 
                 <DigitalDisplay value={mines - countAllFlags(playGrid)}/>
 
